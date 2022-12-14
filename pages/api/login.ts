@@ -1,16 +1,18 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import User from '../../model/user';
+import User from '../../model/User';
+import connectMongodb from '../../utils/connectMongo';
 
-export default async function addUser(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function login(req: NextApiRequest, res: NextApiResponse) {
   try {
+    await connectMongodb();
     const { password, email } = req.body;
+    const user = await User.getUserByEmail(email, password);
 
-    let user = await User.findByCredentials(email);
-    console.log(user);
-    res.send(200);
+    if (user) {
+      res.send(200);
+    }
+
+    throw new Error('login failed');
   } catch (error) {
     res.status(500);
   }
