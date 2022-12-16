@@ -27,12 +27,16 @@ export interface IUser {
 export interface IUserMethods {
   comparePassword(
     password: string,
-    email: string
-  ): Promise<HydratedDocument<IUser, IUserMethods>>;
+    userPwd: string | { type: String; required: true }
+  ): boolean;
 }
 
 export interface UserModel extends Model<IUser, {}, IUserMethods> {
   hashPassword(
+    password: string
+  ): Promise<HydratedDocument<IUser, IUserMethods>>;
+  getUserByEmail(
+    email: string,
     password: string
   ): Promise<HydratedDocument<IUser, IUserMethods>>;
 }

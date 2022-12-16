@@ -1,43 +1,6 @@
-import mongoose, { Model, Schema, HydratedDocument, model } from 'mongoose';
+import mongoose, { Schema, model } from 'mongoose';
 const bcrypt = require('bcrypt');
-
-interface IUser {
-  email: {
-    type: String;
-    unique: true;
-    required: true;
-  };
-  name: {
-    type: String;
-    required: true;
-  };
-  password: {
-    type: String;
-    required: true;
-  };
-  tokens: [
-    {
-      token: {
-        type: String;
-        required: true;
-      };
-    }
-  ];
-}
-
-interface IUserMethods {
-  comparePassword(password: string, userPwd: string): string;
-}
-
-interface UserModel extends Model<IUser, {}, IUserMethods> {
-  hashPassword(
-    password: string
-  ): Promise<HydratedDocument<IUser, IUserMethods>>;
-  getUserByEmail(
-    email: string,
-    password: string
-  ): Promise<HydratedDocument<IUser, IUserMethods>>;
-}
+import { IUser, UserModel, IUserMethods } from '../interface/IUser';
 
 const userSchema = new Schema<IUser, UserModel, IUserMethods>({
   email: {
@@ -75,17 +38,11 @@ userSchema.static(
     try {
       const user = await User.findOne({ email }, 'password');
 
-      if (!user) {
+      if (user?.password !== undefined && !user) {
         throw new Error('No user found');
       }
 
-      const isvalid = user.comparePassword(password, user.password);
-
-      if (isvalid) {
-        return user;
-      }
-
-      throw new Error('password was incorect');
+      return user;
     } catch (error) {
       console.log(error);
     }
@@ -95,7 +52,8 @@ userSchema.static(
 userSchema.method(
   'comparePassword',
   async function comparePassword(password: string, userPwd: string) {
-    const isvalid = await bcrypt.compareSync(password, userPwd);
+    const isvalid = await bcrypt.compare(password, userPwd);
+
     return isvalid;
   }
 );

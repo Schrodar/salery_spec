@@ -7,13 +7,12 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     await connectMongodb();
     const { password, email } = req.body;
     const user = await User.getUserByEmail(email, password);
-
-    if (user) {
+    const haveMatch = user.comparePassword(password, user.password);
+    if (haveMatch) {
       res.send(200);
     }
-
-    throw new Error('login failed');
+    throw new Error('wrong password');
   } catch (error) {
-    res.status(500);
+    res.status(405).end();
   }
 }
