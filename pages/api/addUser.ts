@@ -12,21 +12,22 @@ export default async function addUser(
   try {
     await connectMongodb();
     const { name, email, password } = req.body as UserDto;
+    const uniqueEmail = await User.findOne({ email });
     const newPass: string = await bcrypt.hash(password, 8);
 
-    let user = new User({
-      name,
-      email,
-      password: newPass,
-      tokens: [],
-    });
+    if (uniqueEmail) {
+      res.status(401).json({ message: 'Allready have a user with that email' });
+    } else {
+      let user = new User({
+        name,
+        email,
+        password: newPass,
+        tokens: [],
+      });
 
-    await user
-      .save()
-      .then()
-      .catch((error: any) => console.log(error));
-    res.json({ user });
-  } catch (error) {
-    res.status(500);
+      await user.save().then(() => res.send(200));
+    }
+  } catch (err: any) {
+    console.log(err);
   }
 }

@@ -8,12 +8,12 @@ export default async function login(req: NextApiRequest, res: NextApiResponse) {
     const { password, email } = req.body;
     const user = await User.getUserByEmail(email, password);
     const haveMatch = await user.comparePassword(password, user.password);
-    console.log(haveMatch);
+
     if (haveMatch) {
       res.send(200);
     }
     throw new Error('wrong password');
   } catch (error) {
-    res.status(405).end();
+    res.status(401).end();
   }
 }
