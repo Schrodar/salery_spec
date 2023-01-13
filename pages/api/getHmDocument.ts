@@ -12,7 +12,7 @@ export default async function getHmDocument(
     const doc = await Hmsb.getDocument(_id);
     const nextService = await doc.nextService();
     console.log(nextService);
-    res.send(JSON.stringify(nextService));
+    res.send(JSON.stringify({ nextService, doc }));
   } catch (error) {
     console.log(error);
   }

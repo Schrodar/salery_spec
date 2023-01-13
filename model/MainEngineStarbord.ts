@@ -27,7 +27,6 @@ const mainEngineStarbord = new Schema<InterfaceHmSb, HmSbModel, HmSbMethods>({
 mainEngineStarbord.method(
   'set',
   async function set(this: HmSbMethods, amount: number, operand: string) {
-    console.log('set method called');
     try {
       if (operand === 'lastService') {
         this.lastService = amount;
@@ -64,13 +63,18 @@ mainEngineStarbord.method(
 mainEngineStarbord.method(
   'nextService',
   async function nextService(this: HmSbMethods) {
+    let lastService: number = this.lastService;
+    let nextService: number = lastService + 500;
+    let leftToService = this.workingHours - this.lastService;
     type Dto = {
-      leftToService: number | null;
+      nextService: number;
+      leftToService: number;
       serviceTyp: NextSeviceClass | null;
     };
 
     let nextServiceDto: Dto = {
-      leftToService: null,
+      nextService,
+      leftToService,
       serviceTyp: null,
     };
 
@@ -89,29 +93,16 @@ mainEngineStarbord.method(
       var numb: number = backToNumber;
     }
 
-    if (numberOfDigits === 1) {
-      let leftToService: number = 500 - numb;
-      nextServiceDto.leftToService = leftToService;
-      nextServiceDto.serviceTyp = FemhundraTimmarsService;
-      return nextServiceDto;
-    }
-
-    if (numberOfDigits === 2) {
-      let leftToService: number = 500 - numb;
-      nextServiceDto.leftToService = leftToService;
+    if (numberOfDigits <= 2) {
       nextServiceDto.serviceTyp = FemhundraTimmarsService;
       return nextServiceDto;
     }
 
     if (numberOfDigits === 3) {
       if (numb < 500) {
-        let leftToService: number = 500 - numb;
-        nextServiceDto.leftToService = leftToService;
         nextServiceDto.serviceTyp = FemhundraTimmarsService;
         return nextServiceDto;
       } else {
-        let leftToService: number = 1000 - numb;
-        nextServiceDto.leftToService = leftToService;
         nextServiceDto.serviceTyp = TusenTimmarsService;
         return nextServiceDto;
       }
@@ -127,78 +118,42 @@ mainEngineStarbord.method(
       // convert numb2 to number
       let numb3 = parseInt(numb2);
 
-      let getFirstDiget: string = numb.toString();
       // save first latter of string
+      let getFirstDiget: string = numb.toString();
       getFirstDiget = getFirstDiget.slice(0, 1);
 
       // convert getFirstDiget to number
       let getFirstDiget2 = parseInt(getFirstDiget);
+
+      // now we have the first diget of the number
+      // lets find next service
       if (numb3 < 500) {
-        let leftToService: number = 500 - numb3;
-        nextServiceDto.leftToService = leftToService;
         nextServiceDto.serviceTyp = FemhundraTimmarsService;
         return nextServiceDto;
       } else {
-        if (getFirstDiget2 === 1) {
-          let leftToService: number = 1000 - numb3;
-          nextServiceDto.leftToService = leftToService;
+        // 1 3 5 7 9 all corespond to 1000 hours service
+        if (
+          getFirstDiget2 === 1 ||
+          getFirstDiget2 === 3 ||
+          getFirstDiget2 === 5 ||
+          getFirstDiget2 === 7 ||
+          getFirstDiget2 === 9
+        ) {
           nextServiceDto.serviceTyp = TusenTimmarsService;
           return nextServiceDto;
         }
-
-        if (getFirstDiget2 === 2) {
-          let leftToService: number = 1000 - numb3;
-          nextServiceDto.leftToService = leftToService;
+        // 2 4 8 all corespond to 2000 hours service
+        if (
+          getFirstDiget2 === 2 ||
+          getFirstDiget2 === 4 ||
+          getFirstDiget2 === 8
+        ) {
           nextServiceDto.serviceTyp = TowTusenTimmarsService;
           return nextServiceDto;
         }
-
-        if (getFirstDiget2 === 3) {
-          let leftToService: number = 1000 - numb3;
-          nextServiceDto.leftToService = leftToService;
-          nextServiceDto.serviceTyp = TusenTimmarsService;
-          return nextServiceDto;
-        }
-
-        if (getFirstDiget2 === 4) {
-          let leftToService: number = 1000 - numb3;
-          nextServiceDto.leftToService = leftToService;
-          nextServiceDto.serviceTyp = TowTusenTimmarsService;
-          return nextServiceDto;
-        }
-
-        if (getFirstDiget2 === 5) {
-          let leftToService: number = 1000 - numb3;
-          nextServiceDto.leftToService = leftToService;
-          nextServiceDto.serviceTyp = TusenTimmarsService;
-          return nextServiceDto;
-        }
-
+        // 6 corespond to 6000 hours service
         if (getFirstDiget2 === 6) {
-          let leftToService: number = 1000 - numb3;
-          nextServiceDto.leftToService = leftToService;
           nextServiceDto.serviceTyp = SexTusenTimmarsService;
-          return nextServiceDto;
-        }
-
-        if (getFirstDiget2 === 7) {
-          let leftToService: number = 1000 - numb3;
-          nextServiceDto.leftToService = leftToService;
-          nextServiceDto.serviceTyp = TusenTimmarsService;
-          return nextServiceDto;
-        }
-
-        if (getFirstDiget2 === 8) {
-          let leftToService: number = 1000 - numb3;
-          nextServiceDto.leftToService = leftToService;
-          nextServiceDto.serviceTyp = TowTusenTimmarsService;
-          return nextServiceDto;
-        }
-
-        if (getFirstDiget2 === 9) {
-          let leftToService: number = 1000 - numb3;
-          nextServiceDto.leftToService = leftToService;
-          nextServiceDto.serviceTyp = TusenTimmarsService;
           return nextServiceDto;
         }
       }
