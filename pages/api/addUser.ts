@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import UserDto from '../../dtos/adduser-dtos';
+import UserDto from '../../dtos/userDtos/adduser-dtos';
 import User from '../../model/User';
 import connectMongodb from '../../utils/connectMongo';
 

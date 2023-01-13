@@ -11,16 +11,14 @@ export interface InterfaceHmSb {
   coolant: string;
   coolantCapacity: number;
   workingHours: number;
-  lastService: string;
+  lastService: number;
 }
 
-export interface HmSbMethods {
-  add(amount: number, operand: string): void;
-  removeAmount(amount: number, operand: string): void;
+export interface HmSbMethods extends InterfaceHmSb {
   set(amount: number | string, operand: string): void;
   // nextService vill use this. and it will refer to the document HMSB in the doucemnt workingHouers exist
-  // it will give aboute tim to next service
   nextService(): Promise<HydratedDocument<InterfaceHmSb>>;
+  save(): Promise<HydratedDocument<InterfaceHmSb>>;
 }
 
 export interface HmSbModel extends Model<InterfaceHmSb, {}, HmSbMethods> {

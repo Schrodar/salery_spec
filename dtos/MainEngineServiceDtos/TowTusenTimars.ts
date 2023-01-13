@@ -1,15 +1,15 @@
 import NextSeviceClass from './nextServiceClass-dto';
 
-export const SexTusenTimmarsService = new NextSeviceClass(
-  'FemhundraTimmars', // serviceName
-  'FemhundraTimmars lägg till mer text här', // overView
+export const TowTusenTimmarsService = new NextSeviceClass(
+  'Två tusen timmars service', // serviceName
+  'Två tusen timmars service lägg till mer text här', // overView
   true, // byteAvOlja
   true, // renGoringAvCentrifugaloljeRenare
   true, // byteAvOljeFilter
   true, // byteAvOljeFilterInsatts
   true, // byteAvOfferAnoder
   true, // kontrolAvImpeller
-  true, // RenaKylSysytemBytaGlyckol
+  false, // RenaKylSysytemBytaGlyckol
   true, // kontroleraLuftRenarensUndertryckIndikator
   true, // byteAvLuftrenareFilterInsatts
   true, // byteAvLuftrenarensSäckerhetsFilter

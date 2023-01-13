@@ -2,7 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import User from '../../model/User';
 import connectMongodb from '../../utils/connectMongo';
 
-export default async function login(req: NextApiRequest, res: NextApiResponse) {
+export default async function logIn(req: NextApiRequest, res: NextApiResponse) {
   try {
     await connectMongodb();
     const { password, email } = req.body;

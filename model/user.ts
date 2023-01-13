@@ -1,6 +1,10 @@
 import mongoose, { Schema, model } from 'mongoose';
 const bcrypt = require('bcrypt');
-import { IUser, UserModel, IUserMethods } from '../interface/IUser';
+import {
+  IUser,
+  UserModel,
+  IUserMethods,
+} from '../interface/userInterface/IUser';
 
 const userSchema = new Schema<IUser, UserModel, IUserMethods>({
   email: {
@@ -57,8 +61,6 @@ userSchema.method(
     return isvalid;
   }
 );
-
-// pga   så syns inte
 
 const User =
   (mongoose.models.User as UserModel) ||

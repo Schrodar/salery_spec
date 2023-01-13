@@ -1,9 +1,12 @@
 import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
-import { HmDto } from '../../dtos/adduser-dtos';
-import Hmsb from '../../model/Hmsb';
+import { HmDto } from '../../dtos/userDtos/adduser-dtos';
+import Hmsb from '../../model/MainEngineStarbord';
 import connectMongodb from '../../utils/connectMongo';
 
-export default async function hmSb(req: NextApiRequest, res: NextApiResponse) {
+export default async function createMainEngineDocument(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   try {
     await connectMongodb();
     const {
