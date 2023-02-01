@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const options = {
   useUnifiedTopology: true,
@@ -10,7 +10,7 @@ const connectMongodb = async () =>
       dbName: `app`,
       autoIndex: true,
     })
-    .then((on) => console.log(' it works !!'))
+    .then((on) => console.log(" it works !!"))
     .catch((err) => console.log(err));
 
 export default connectMongodb;

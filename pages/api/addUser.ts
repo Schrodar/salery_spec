@@ -1,9 +1,9 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import UserDto from '../../dtos/userDtos/adduser-dtos';
-import User from '../../model/User';
-import connectMongodb from '../../utils/connectMongo';
+import { NextApiRequest, NextApiResponse } from "next";
+import UserDto from "../../dtos/userDtos/adduser-dtos";
+import User from "../../model/User";
+import connectMongodb from "../../utils/connectMongo";
 
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 
 export default async function addUser(
   req: NextApiRequest,
@@ -16,7 +16,7 @@ export default async function addUser(
     const newPass: string = await bcrypt.hash(password, 8);
 
     if (uniqueEmail) {
-      res.status(401).json({ message: 'Allready have a user with that email' });
+      res.status(401).json({ message: "Allready have a user with that email" });
     } else {
       let user = new User({
         name,

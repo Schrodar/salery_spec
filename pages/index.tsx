@@ -1,37 +1,10 @@
-import Head from 'next/head'
-import { InferGetServerSidePropsType } from 'next'
+import Layoute from "../components/Layoute";
 
-export async function getServerSideProps() {
- let isConnected: boolean = true
-return isConnected
-}
-
-export default function Home({
-  isConnected,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Home() {
   return (
-    <div className="container">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
-      <main>
-        <h1 className="title">
-          Welcome to <a href="https://nextjs.org">Next.js with MongoDB!</a>
-        </h1>
-
-        {isConnected ? (
-          <h2 className="subtitle">You are connected to MongoDB</h2>
-        ) : (
-          <h2 className="subtitle">
-            You are NOT connected to MongoDB. Check the <code>README.md</code>{' '}
-            for instructions.
-          </h2>
-        )}
-        </main>
-
-       
-    </div>
-  )
+    <Layoute>
+      <div className="flex-1"></div>
+      <div className="flex h-screen w-auto flex-1 items-center justify-end justify-center bg-[url('../public/images/home.png')] bg-cover bg-no-repeat"></div>
+    </Layoute>
+  );
 }

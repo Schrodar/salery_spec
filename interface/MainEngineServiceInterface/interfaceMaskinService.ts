@@ -1,7 +1,6 @@
-import { HydratedDocument, Model } from 'mongoose';
+import { HydratedDocument, Model } from "mongoose";
 
 export interface interfaceMaskinService {
-  
   sericeName: string;
   overView: string;
   workingHours: number;

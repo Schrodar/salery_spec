@@ -1,8 +1,8 @@
-import NextSeviceClass from './nextServiceClass-dto';
+import NextSeviceClass from "./nextServiceClass-dto";
 
 export const TusenTimmarsService = new NextSeviceClass(
-  'Tusen timmars Service', // serviceName
-  'Tusen Timmars', // overView
+  "Tusen timmars Service", // serviceName
+  "Tusen Timmars", // overView
   true, // byteAvOlja
   true, // renGoringAvCentrifugaloljeRenare
   true, // byteAvOljeFilter

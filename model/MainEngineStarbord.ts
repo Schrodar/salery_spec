@@ -1,14 +1,14 @@
-import mongoose, { Schema, model } from 'mongoose';
-import NextSeviceClass from '../dtos/MainEngineServiceDtos/nextServiceClass-dto';
-import { FemhundraTimmarsService } from '../dtos/MainEngineServiceDtos/FemhundraTimmars';
+import mongoose, { Schema, model } from "mongoose";
+import NextSeviceClass from "../dtos/MainEngineServiceDtos/nextServiceClass-dto";
+import { FemhundraTimmarsService } from "../dtos/MainEngineServiceDtos/FemhundraTimmars";
 import {
   InterfaceHmSb,
   HmSbMethods,
   HmSbModel,
-} from '../interface/hmSbInterface';
-import { TusenTimmarsService } from '../dtos/MainEngineServiceDtos/TusenTimarsService';
-import { TowTusenTimmarsService } from '../dtos/MainEngineServiceDtos/TowTusenTimars';
-import { SexTusenTimmarsService } from '../dtos/MainEngineServiceDtos/SexTusenTimars';
+} from "../interface/hmSbInterface";
+import { TusenTimmarsService } from "../dtos/MainEngineServiceDtos/TusenTimarsService";
+import { TowTusenTimmarsService } from "../dtos/MainEngineServiceDtos/TowTusenTimars";
+import { SexTusenTimmarsService } from "../dtos/MainEngineServiceDtos/SexTusenTimars";
 
 const mainEngineStarbord = new Schema<InterfaceHmSb, HmSbModel, HmSbMethods>({
   workingHours: { type: Number },
@@ -25,31 +25,31 @@ const mainEngineStarbord = new Schema<InterfaceHmSb, HmSbModel, HmSbMethods>({
 });
 
 mainEngineStarbord.method(
-  'set',
+  "set",
   async function set(this: HmSbMethods, amount: number, operand: string) {
     try {
-      if (operand === 'lastService') {
+      if (operand === "lastService") {
         this.lastService = amount;
         await this.save();
         return this;
       }
 
       if (this === undefined || this === null)
-        throw new Error('no document found');
+        throw new Error("no document found");
 
-      if (operand === 'add') {
+      if (operand === "add") {
         this.workingHours = this.workingHours + amount;
         await this.save();
         return this;
       }
 
-      if (operand === 'remove') {
+      if (operand === "remove") {
         this.workingHours = this.workingHours - amount;
         await this.save();
         return this;
       }
 
-      if (operand === 'set') {
+      if (operand === "set") {
         this.workingHours = amount;
         await this.save();
         return this;
@@ -61,7 +61,7 @@ mainEngineStarbord.method(
 );
 
 mainEngineStarbord.method(
-  'nextService',
+  "nextService",
   async function nextService(this: HmSbMethods) {
     let lastService: number = this.lastService;
     let nextService: number = lastService + 500;
@@ -79,7 +79,7 @@ mainEngineStarbord.method(
     };
 
     if (this === undefined || this === null)
-      throw new Error('no document found');
+      throw new Error("no document found");
 
     var numb: number = this.workingHours;
     // get number of digits in number
@@ -161,10 +161,10 @@ mainEngineStarbord.method(
   }
 );
 
-mainEngineStarbord.static('getDocument', async (_id: string) => {
+mainEngineStarbord.static("getDocument", async (_id: string) => {
   try {
     const document = await Hmsb.findById(_id);
-    if (!document) throw new Error('no Document found!');
+    if (!document) throw new Error("no Document found!");
     return document;
   } catch (error) {
     console.log(error);
@@ -173,6 +173,6 @@ mainEngineStarbord.static('getDocument', async (_id: string) => {
 
 const Hmsb =
   (mongoose.models.Hmsb as HmSbModel) ||
-  model<InterfaceHmSb, HmSbModel>('Hmsb', mainEngineStarbord);
+  model<InterfaceHmSb, HmSbModel>("Hmsb", mainEngineStarbord);
 
 export default Hmsb;

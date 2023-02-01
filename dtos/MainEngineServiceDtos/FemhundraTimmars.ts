@@ -1,8 +1,8 @@
-import NextSeviceClass from './nextServiceClass-dto';
+import NextSeviceClass from "./nextServiceClass-dto";
 
 export const FemhundraTimmarsService = new NextSeviceClass(
-  'FemhundraTimmars',
-  'FemhundraTimmars lägg till mer text här',
+  "FemhundraTimmars",
+  "FemhundraTimmars lägg till mer text här",
   true,
   true,
   true,

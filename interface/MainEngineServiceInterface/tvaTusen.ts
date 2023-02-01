@@ -1,4 +1,4 @@
-import { HydratedDocument, Model } from 'mongoose';
+import { HydratedDocument, Model } from "mongoose";
 
 export interface tvaTusenTimmars {
   sericeName: { type: String; required: true };

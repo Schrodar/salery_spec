@@ -1,4 +1,4 @@
-import { HydratedDocument, Model } from 'mongoose';
+import { HydratedDocument, Model } from "mongoose";
 
 export interface InterfaceHmSb {
   name: string;

@@ -1,25 +1,25 @@
-import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 
 function errorHandler(err: unknown, res: NextApiResponse<ErrorResponse>) {
   // default to 500 server error
   console.error(err);
   return res.status(500).json({
-    error: { message: 'Internal Server Error', err: err },
+    error: { message: "Internal Server Error", err: err },
     status: 500,
   });
 }
 
 type Method =
-  | 'GET'
-  | 'DELETE'
-  | 'HEAD'
-  | 'OPTIONS'
-  | 'POST'
-  | 'PUT'
-  | 'PATCH'
-  | 'PURGE'
-  | 'LINK'
-  | 'UNLINK';
+  | "GET"
+  | "DELETE"
+  | "HEAD"
+  | "OPTIONS"
+  | "POST"
+  | "PUT"
+  | "PATCH"
+  | "PURGE"
+  | "LINK"
+  | "UNLINK";
 
 // Shape of the response when an error is thrown
 interface ErrorResponse {

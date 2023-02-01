@@ -1,4 +1,4 @@
-import { HydratedDocument, Model } from 'mongoose';
+import { HydratedDocument, Model } from "mongoose";
 
 export interface ettTuseTimmars {
   serviceName: { type: String; required: true };

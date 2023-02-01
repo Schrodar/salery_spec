@@ -1,6 +1,6 @@
-import { NextApiRequest, NextApiResponse } from 'next';
-import User from '../../model/User';
-import connectMongodb from '../../utils/connectMongo';
+import { NextApiRequest, NextApiResponse } from "next";
+import User from "../../model/User";
+import connectMongodb from "../../utils/connectMongo";
 
 export default async function logIn(req: NextApiRequest, res: NextApiResponse) {
   try {
@@ -12,7 +12,7 @@ export default async function logIn(req: NextApiRequest, res: NextApiResponse) {
     if (haveMatch) {
       res.send(200);
     }
-    throw new Error('wrong password');
+    throw new Error("wrong password");
   } catch (error) {
     res.status(401).end();
   }

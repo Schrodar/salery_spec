@@ -1,10 +1,10 @@
-import mongoose, { Schema, model } from 'mongoose';
-const bcrypt = require('bcrypt');
+import mongoose, { Schema, model } from "mongoose";
+const bcrypt = require("bcrypt");
 import {
   IUser,
   UserModel,
   IUserMethods,
-} from '../interface/userInterface/IUser';
+} from "../interface/userInterface/IUser";
 
 const userSchema = new Schema<IUser, UserModel, IUserMethods>({
   email: {
@@ -30,20 +30,20 @@ const userSchema = new Schema<IUser, UserModel, IUserMethods>({
 });
 
 userSchema.static(
-  'hashPassword',
+  "hashPassword",
   function hashPassword(password: string): string {
     return bcrypt.hashSync(password);
   }
 );
 
 userSchema.static(
-  'getUserByEmail',
+  "getUserByEmail",
   async function getUserByEmail(email: string, password: string) {
     try {
-      const user = await User.findOne({ email }, 'password');
+      const user = await User.findOne({ email }, "password");
 
       if (user?.password !== undefined && !user) {
-        throw new Error('No user found');
+        throw new Error("No user found");
       }
 
       return user;
@@ -54,7 +54,7 @@ userSchema.static(
 );
 
 userSchema.method(
-  'comparePassword',
+  "comparePassword",
   async function comparePassword(password: string, userPwd: string) {
     const isvalid = await bcrypt.compare(password, userPwd);
 
@@ -64,6 +64,6 @@ userSchema.method(
 
 const User =
   (mongoose.models.User as UserModel) ||
-  model<IUser, UserModel>('User', userSchema);
+  model<IUser, UserModel>("User", userSchema);
 
 export default User;
